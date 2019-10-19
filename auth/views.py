@@ -18,7 +18,7 @@ EMAIL = 'email'
 
 
 def log_event(client: Client, member, event_type: str, value: str, success: bool):
-    AuthEvent.objects.create(client=client, member=member, type=event_type, success=success, value=value)
+    AuthEvent.objects.create(client=client, member=member, event_type=event_type, success=success, value=value)
 
 
 def check_access(member: Member, client: Client, event_type, value):

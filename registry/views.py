@@ -18,6 +18,8 @@ class StandardResultsSetPagination(PageNumberPagination):
 class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all().order_by('id')
     serializer_class = MemberSerializer
+    filterset_fields = '__all__'
+    search_fields = ('given_name', 'surname', 'email', 'discord_id', 'card_id', 'ldap_uid')
 
     @action(detail=True)
     def memberships(self, request, pk=None):
@@ -43,27 +45,32 @@ class MembershipViewSet(viewsets.ModelViewSet):
     queryset = Membership.objects.all().order_by('id')
     serializer_class = MembershipSerializer
     pagination_class = StandardResultsSetPagination
+    filterset_fields = '__all__'
 
 
 class PeriodViewSet(viewsets.ModelViewSet):
     queryset = Period.objects.all().order_by('id')
     serializer_class = PeriodSerializer
+    filterset_fields = '__all__'
 
 
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all().order_by('id')
     serializer_class = RoleSerializer
+    filterset_fields = '__all__'
 
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all().order_by('name')
     serializer_class = ClientSerializer
+    filterset_fields = '__all__'
 
 
 class AuthEventViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = AuthEvent.objects.all().order_by('-date')
     serializer_class = AuthEventSerializer
     pagination_class = StandardResultsSetPagination
+    filterset_fields = '__all__'
 
     @action(detail=False)
     def last_scanned_card(self, request):

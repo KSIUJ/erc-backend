@@ -10,9 +10,9 @@ class NullCharField(models.CharField):
 
 
 class Member(models.Model):
-    given_name = models.CharField(max_length=128, blank=True)
-    surname = models.CharField(max_length=128, blank=True)
-    email = NullCharField(max_length=128, unique=True, validators=[validate_email])
+    given_name = models.CharField(max_length=128)
+    surname = models.CharField(max_length=128)
+    email = models.CharField(max_length=128, unique=True, validators=[validate_email])
     card_id = NullCharField(max_length=20, unique=True, null=True, blank=True, default=None)
     discord_id = NullCharField(max_length=128, unique=True, null=True, blank=True, default=None)
     ldap_uid = NullCharField(max_length=64, unique=True, null=True, blank=True, default=None)
@@ -82,7 +82,7 @@ class AuthEvent(models.Model):
 
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="auth_events")
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="auth_events", null=True, blank=True)
-    type = models.CharField(max_length=10, choices=AUTH_EVENT_TYPES, default=CARD)
+    event_type = models.CharField(max_length=10, choices=AUTH_EVENT_TYPES, default=CARD)
     value = models.CharField(max_length=64, blank=False)
     success = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
