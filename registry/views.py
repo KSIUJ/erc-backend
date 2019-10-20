@@ -74,7 +74,7 @@ class AuthEventViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False)
     def last_scanned_card(self, request):
-        event = AuthEvent.objects.filter(type=AuthEvent.CARD).order_by('-date').first()
+        event = AuthEvent.objects.filter(event_type=AuthEvent.CARD).order_by('-date').first()
         if event is None:
             raise NotFound(detail="No scanned cards", code=404)
         return Response({"card_id": event.value})
