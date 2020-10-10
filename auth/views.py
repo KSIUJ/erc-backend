@@ -52,6 +52,8 @@ def authorize(request):
         return HttpResponseBadRequest("Unknown client id")
     if CLIENT_SECRET not in rq or rq[CLIENT_SECRET] != client.secret:
         return HttpResponseForbidden("Bad client secret")
+    if not client.enabled:
+        return HttpResponseForbidden("Client is disabled")
     if CARD_ID in rq:
         try:
             return check_access(Member.objects.get(card_id=rq[CARD_ID]), client, AuthEvent.CARD, rq[CARD_ID])
@@ -89,7 +91,9 @@ def legacy_lock_controller(request):
     try:
         client = Client.objects.get(client_id="legacy")
     except Client.DoesNotExist:
-        return HttpResponseNotFound("Legacy endpoint disabled")
+        return HttpResponseNotFound("Legacy endpoint not defined")
+    if not client.enabled:
+        return HttpResponseForbidden("Legacy endpoint disabled")
     try:
         return check_access(Member.objects.get(card_id=card_id), client, AuthEvent.CARD, card_id)
     except Member.DoesNotExist:
