@@ -22,6 +22,8 @@ from registry.views import MemberViewSet, MembershipViewSet, RoleViewSet, Period
     AuthEventViewSet
 import django_cas_ng.views
 
+from selfservice.views import SelfServiceTokenViewSet, SelfServiceView
+
 router = routers.DefaultRouter()
 router.register(r'members', MemberViewSet)
 router.register(r'memberships', MembershipViewSet)
@@ -29,6 +31,8 @@ router.register(r'roles', RoleViewSet)
 router.register(r'periods', PeriodViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'authevents', AuthEventViewSet)
+router.register(r'selfservicetokens', SelfServiceTokenViewSet)
+router.register(r'selfservice', SelfServiceView, "")
 
 urlpatterns = [
     path('api/', include(router.urls)),

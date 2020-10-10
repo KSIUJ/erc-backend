@@ -49,6 +49,7 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'registry',
+    'selfservice',
 ]
 
 INSTALLED_APPS = DJANGO_INSTALLED_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -146,9 +147,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
@@ -161,6 +159,7 @@ CAS_LOGGED_MSG = None
 CAS_SERVER_URL = 'https://auth.ksi.ii.uj.edu.pl/auth/realms/KSI/protocol/cas/'
 CAS_VERSION = '3'
 CAS_LOGOUT_COMPLETELY = True
+CAS_CHECK_NEXT = lambda _: True
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 CORS_ALLOW_CREDENTIALS = DEBUG

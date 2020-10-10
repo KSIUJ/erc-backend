@@ -84,6 +84,8 @@ def authorize(request):
 @require_http_methods(["GET"])
 def legacy_lock_controller(request):
     card_id = request.GET.get('card_id')
+    if not card_id:
+        return HttpResponseBadRequest("No query specified")
     try:
         client = Client.objects.get(client_id="legacy")
     except Client.DoesNotExist:

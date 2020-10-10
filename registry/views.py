@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, action
 from rest_framework.exceptions import NotFound
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from registry.models import Member, Membership, Period, Role, Client, AuthEvent
@@ -20,6 +21,7 @@ class MemberViewSet(viewsets.ModelViewSet):
     serializer_class = MemberSerializer
     filterset_fields = '__all__'
     search_fields = ('given_name', 'surname', 'email', 'discord_id', 'card_id', 'ldap_uid')
+    permission_classes = [IsAuthenticated]
 
     @action(detail=True)
     def memberships(self, request, pk=None):
@@ -46,24 +48,28 @@ class MembershipViewSet(viewsets.ModelViewSet):
     serializer_class = MembershipSerializer
     pagination_class = StandardResultsSetPagination
     filterset_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
 
 class PeriodViewSet(viewsets.ModelViewSet):
     queryset = Period.objects.all().order_by('id')
     serializer_class = PeriodSerializer
     filterset_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
 
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all().order_by('id')
     serializer_class = RoleSerializer
     filterset_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all().order_by('name')
     serializer_class = ClientSerializer
     filterset_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
 
 class AuthEventViewSet(viewsets.ReadOnlyModelViewSet):
@@ -71,6 +77,7 @@ class AuthEventViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AuthEventSerializer
     pagination_class = StandardResultsSetPagination
     filterset_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
     @action(detail=False)
     def last_scanned_card(self, request):
