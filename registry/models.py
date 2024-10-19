@@ -73,11 +73,13 @@ class AuthEvent(models.Model):
     LDAP = 'LDAP'
     DISCORD = 'DISCORD'
     EMAIL = 'EMAIL'
+    BULK = 'BULK'
     AUTH_EVENT_TYPES = (
         (CARD, 'Card'),
         (LDAP, 'LDAP'),
         (DISCORD, 'Discord'),
-        (EMAIL, 'Email')
+        (EMAIL, 'Email'),
+        (BULK, 'Bulk Query')
     )
 
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="auth_events")
