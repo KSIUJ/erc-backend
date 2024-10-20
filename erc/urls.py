@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from auth.views import authorize, legacy_lock_controller
+from auth.views import authorize, legacy_lock_controller, authorize_bulk
 from registry.views import MemberViewSet, MembershipViewSet, RoleViewSet, PeriodViewSet, ClientViewSet, \
     AuthEventViewSet
 import django_cas_ng.views
@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('authorize/', authorize),
     path('lock/authorize', legacy_lock_controller),
+    path('authorize/bulk', authorize_bulk),
 
     path('admin/', admin.site.urls),
 
