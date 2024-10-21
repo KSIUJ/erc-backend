@@ -56,7 +56,7 @@ def check_access(member: Member, client: Client, event_type, value):
 def check_bulk(client: Client):
     query = None
     for role in client.permissions.all():
-        tmp_query = Q(memberships__role__name=role.name)
+        tmp_query = Q(memberships__roles__name=role.name)
         query = query | tmp_query if query is not None else tmp_query
 
     if query is None:
@@ -71,7 +71,7 @@ def check_bulk(client: Client):
         ).distinct()
     )
     log_event(client, None, AuthEvent.BULK, client.name, True)
-    return HttpResponse(json.dumps(map(lambda m: m.card_id, members)))
+    return HttpResponse(json.dumps(list(map(lambda m: m.card_id, members))))
 
 
 @csrf_exempt
